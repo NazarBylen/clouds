@@ -28,3 +28,10 @@ jobs:
           npm install
           npm run build
           ls -lA
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id:
+          aws-secret-access-key:
+          aws-region:
