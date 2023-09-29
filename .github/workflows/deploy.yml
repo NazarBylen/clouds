@@ -1,0 +1,11 @@
+name: Build and Deploy the Backend REST API (Nest.js + Swagger).
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
