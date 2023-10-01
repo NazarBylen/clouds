@@ -31,6 +31,7 @@ jobs:
       - name: Prepare ZIP file for AWS CodeDeploy
         run: |
           ls -lA
+          zip -r clouds.zip dist
           
 
       - name: Configure AWS Credentials
