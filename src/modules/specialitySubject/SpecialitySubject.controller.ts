@@ -4,8 +4,8 @@ import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { SpecialitySubjectService } from './SpecialitySubject.service';
 import { SpecialitySubjectDto } from './dto/specialitySubject.dto';
 
-@ApiTags('SpecialitySubjects')
-@Controller('specialitySubjects')
+@ApiTags('Speciality/subjects')
+@Controller('speciality/subjects')
 export class SpecialitySubjectController {
   constructor(
     private readonly specialitySubjectsService: SpecialitySubjectService,
