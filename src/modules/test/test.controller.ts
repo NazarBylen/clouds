@@ -12,7 +12,7 @@ export class TestController {
     type: TestDto,
     description: 'List of tests',
   })
-  @Get('/')
+  @Get('/list')
   async getTest() {
     return this.testService.getHello();
   }
