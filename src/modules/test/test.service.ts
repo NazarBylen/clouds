@@ -11,7 +11,18 @@ export class TestService {
     @InjectRepository(Test)
     private testRepository: Repository<Test>,
   ) {}
-  async getHello(): Promise<TestDto[]> {
-    return this.testRepository.find();
+  list = [
+    {
+      id: 1,
+      name: 'tset1',
+    },
+    {
+      id: 2,
+      name: 'test2',
+    },
+  ];
+
+  getList(): TestDto[] {
+    return this.list;
   }
 }

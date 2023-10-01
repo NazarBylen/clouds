@@ -12,8 +12,8 @@ export class TestController {
     type: TestDto,
     description: 'List of tests',
   })
-  @Get('/list')
-  async getTest() {
-    return this.testService.getHello();
+  @Get('/')
+  getTest() {
+    return this.testService.getList();
   }
 }
