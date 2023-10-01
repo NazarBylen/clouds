@@ -28,10 +28,15 @@ jobs:
       - name: Prepare ZIP file for AWS CodeDeploy
         run: |
           mkdir clouds-zip
-          cp -r ./scripts dist
-          cp ./appspec.yml dist
-          zip -r ./clouds-zip/clouds.zip dist
-          ls -lA
+          mkdir clouds
+          mkdir ./clouds/app
+          cp -r ./scripts clouds
+          cp ./appspec.yml clouds
+          cp -r ./dist/* clouds/app
+          cp -r ./node_modules clouds/app
+          cd ./clouds
+          chmod +x ./scripts/*
+          zip -r ../clouds-zip/clouds-${{ github.sha }}.zip .
           
 
       - name: Configure AWS Credentials
