@@ -30,8 +30,8 @@ jobs:
 
       - name: Prepare ZIP file for AWS CodeDeploy
         run: |
-          mkdir clouds
-          zip -r ./clouds/clouds.zip dist
+          mkdir clouds-zip
+          zip -r ./clouds-zip/clouds.zip dist
           ls -lA
           
 
@@ -43,7 +43,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload files to AWS S3 bucket
-        run: aws s3 sync --cache-control 'no-cache' clouds/clouds.zip s3://${{ secrets.AWS_S3_BUCKET }}
+        run: aws s3 sync --cache-control 'no-cache' clouds-zip s3://${{ secrets.AWS_S3_BUCKET }}
 
       - name: Run AWS CodeDeploy
         run: |
