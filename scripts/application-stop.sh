@@ -2,4 +2,5 @@
 set -x
 
 # stop pm2 service".
-service pm2 kill
+cd /home/ubuntu
+pm2 kill
