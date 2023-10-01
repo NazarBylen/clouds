@@ -14,9 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: List of files
-        run: ls -lA
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,6 +28,8 @@ jobs:
       - name: Prepare ZIP file for AWS CodeDeploy
         run: |
           mkdir clouds-zip
+          cp -r ./scripts dist
+          cp ./appspec.yml dist
           zip -r ./clouds-zip/clouds.zip dist
           ls -lA
           
