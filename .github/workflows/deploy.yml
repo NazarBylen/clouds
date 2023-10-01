@@ -27,7 +27,11 @@ jobs:
         run: |
           npm install
           npm run build
+
+      - name: Prepare ZIP file for AWS CodeDeploy
+        run: |
           ls -lA
+          
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
