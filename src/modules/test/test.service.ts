@@ -25,4 +25,8 @@ export class TestService {
   getList(): TestDto[] {
     return this.list;
   }
+
+  // getItem(id: number): TestDto {
+  //   return this.list.find((item) => item.id === id);
+  // }
 }

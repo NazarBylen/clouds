@@ -10,10 +10,19 @@ export class TestController {
 
   @ApiOkResponse({
     type: TestDto,
-    description: 'List of tests',
+    description: 'LIST OF TESTINGS!',
   })
   @Get('/')
   getTest() {
     return this.testService.getList();
   }
+
+  // @ApiOkResponse({
+  //   type: TestDto,
+  //   description: 'test item',
+  // })
+  // @Get('/:id')
+  // getItem(@Param() { id }) {
+  //   return this.testService.getItem(id);
+  // }
 }
