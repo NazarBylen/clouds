@@ -9,7 +9,32 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: NPM install
+        run: npm install
+
+      - name: Run tests
+        run: |
+          npm run format
+          npm run lint:fix
+          npm run lint:check
+          npm run test
+  
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -49,10 +74,25 @@ jobs:
       - name: Upload files to AWS S3 bucket
         run: aws s3 sync --cache-control 'no-cache' clouds-zip s3://${{ secrets.AWS_S3_BUCKET }}
 
-      - name: Run AWS CodeDeploy
-        run: |
-          aws deploy create-deployment \
-          --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} \
-          --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }} \
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET }},key=clouds-${{ github.sha }}.zip,bundleType=zip \
-          --description "Revision of the clouds-${{ github.sha }}"
+    deploy:
+      needs: build
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+      steps:
+        - uses: actions/checkout@v3
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Run AWS CodeDeploy
+          run: |
+            aws deploy create-deployment \
+            --application-name ${{ secrets.AWS_CODEDEPLOY_APP_NAME }} \
+            --deployment-group-name ${{ secrets.AWS_CODEDEPLOY_GROUP_NAME }} \
+            --s3-location bucket=${{ secrets.AWS_S3_BUCKET }},key=clouds-${{ github.sha }}.zip,bundleType=zip \
+            --description "Revision of the clouds-${{ github.sha }}"
