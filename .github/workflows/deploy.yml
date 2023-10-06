@@ -25,12 +25,14 @@ jobs:
       - name: NPM install
         run: npm install
 
-      - name: Run tests
+      - name: Run eslint & prettier formatter
         run: |
           npm run format
           npm run lint:fix
           npm run lint:check
-          npm run test
+
+      - name: Run tests
+        run: npm run test
   
 
   build:
