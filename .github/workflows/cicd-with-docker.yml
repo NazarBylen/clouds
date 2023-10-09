@@ -1,0 +1,35 @@
+name: Build and Deploy (Docker Container [NodeJS project + PM2])
+
+on:
+  push:
+    branches:
+      - stage-2
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          docker-version: '24.0.6'
+
+      - name: Build Docker Image
+        run: |
+          docker build -t clouds-nodejs-app:your-tag \
+            --build-arg DATABASE_HOST_ARG=$DATABASE_HOST \
+            --build-arg DATABASE_PORT_ARG=$DATABASE_PORT \
+            --build-arg DATABASE_USERNAME_ARG=$DATABASE_USERNAME \
+            --build-arg DATABASE_PASSWORD_ARG=$DATABASE_PASSWORD \
+            --build-arg DATABASE_NAME_ARG=$DATABASE_NAME \
