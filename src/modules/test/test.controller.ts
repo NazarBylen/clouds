@@ -10,7 +10,7 @@ export class TestController {
 
   @ApiOkResponse({
     type: TestDto,
-    description: 'Get All Tests',
+    description: 'Get All Tests Endpoint',
   })
   @Get('/')
   getTest() {
