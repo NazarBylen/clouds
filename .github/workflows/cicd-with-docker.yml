@@ -3,7 +3,7 @@ name: Build and Deploy (Docker Container [NodeJS project + PM2])
 on:
   push:
     branches:
-      - stage-2
+      - lab2
 
 jobs:
   build-and-deploy:
