@@ -21,6 +21,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Set Package Version
+        id: set-version
+        run: echo "PACKAGE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Show Package Version
+        run: |
+          echo "Package Version: ${{ env.PACKAGE_VERSION }}"
+
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
         with:
@@ -28,9 +36,10 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t clouds-nodejs-app:your-tag \
+          docker build -t clouds-nodejs-app:${{ env.PACKAGE_VERSION }} \
             --build-arg DATABASE_HOST_ARG=$DATABASE_HOST \
             --build-arg DATABASE_PORT_ARG=$DATABASE_PORT \
             --build-arg DATABASE_USERNAME_ARG=$DATABASE_USERNAME \
             --build-arg DATABASE_PASSWORD_ARG=$DATABASE_PASSWORD \
             --build-arg DATABASE_NAME_ARG=$DATABASE_NAME \
+            .
