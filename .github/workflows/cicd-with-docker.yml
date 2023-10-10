@@ -34,16 +34,6 @@ jobs:
         with:
           docker-version: '24.0.6'
 
-      - name: Build Docker Image
-        run: |
-          docker build -t clouds-nodejs-app:${{ env.PACKAGE_VERSION }} \
-            --build-arg DATABASE_HOST_ARG=$DATABASE_HOST \
-            --build-arg DATABASE_PORT_ARG=$DATABASE_PORT \
-            --build-arg DATABASE_USERNAME_ARG=$DATABASE_USERNAME \
-            --build-arg DATABASE_PASSWORD_ARG=$DATABASE_PASSWORD \
-            --build-arg DATABASE_NAME_ARG=$DATABASE_NAME \
-            .
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,6 +44,20 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: clouds-nodejs-app
+          IMAGE_TAG: ${{ env.PACKAGE_VERSION }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            --build-arg DATABASE_HOST_ARG=$DATABASE_HOST \
+            --build-arg DATABASE_PORT_ARG=$DATABASE_PORT \
+            --build-arg DATABASE_USERNAME_ARG=$DATABASE_USERNAME \
+            --build-arg DATABASE_PASSWORD_ARG=$DATABASE_PASSWORD \
+            --build-arg DATABASE_NAME_ARG=$DATABASE_NAME \
+            .
 
       - name: Push docker image to Amazon ECR
         env:
