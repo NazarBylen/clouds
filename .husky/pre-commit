@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Update the version in package.json using npm version (incrementing the patch version)
-npm version patch --no-git-tag-version
+npm version patch --no-git-tag-version && git add .
