@@ -67,4 +67,4 @@ jobs:
           ECR_REPOSITORY: clouds-nodejs-app
           IMAGE_TAG: ${{ env.PACKAGE_VERSION }}
         run: |
-          docker push steps.build-docker-image.outputs.docker-image
+          docker push ${{ steps.build-docker-image.outputs.docker-image }}
