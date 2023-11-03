@@ -2,8 +2,8 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
-  vus: 300000,
-  duration: '1s',
+  vus: 30000,
+  duration: '10s',
 };
 
 export default function getUniversities() {
