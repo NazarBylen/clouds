@@ -1,11 +1,83 @@
-.App {
-  height: 100vh;
+body {
+  font-family: Roboto, serif;
+}
+
+.app {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.logo-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
+}
+
+.devices-cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  min-width: 290px;
+  margin: 10px 0;
+  background-color: #e8e8e8;
+  transition: background-color 200ms linear;
+}
+
+.card:hover {
+  background-color: #cecece;
+  transition: background-color 200ms linear;
+}
+
+.device-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.device-detail-info {
+  margin: 10px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-btn {
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #2c9caf;
+  transition: all 1000ms;
+  font-size: 15px;
+  outline: 2px solid #2c9caf;
+}
+
+.edit-btn:hover {
+  color: #ffffff;
+  outline: 2px solid #70bdca;
+  box-shadow: 4px 5px 17px -4px #268391;
+  background-color: #2c9caf;
+}
+
+.edit-btn::before {
+  background-color: #2c9caf;
+  transform: skewX(45deg);
+  transition: width 1000ms;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 }
