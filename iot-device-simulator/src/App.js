@@ -65,10 +65,13 @@ function App() {
 
     const response = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    const results = response.json();
-    console.log(results);
+    const results = await response.json();
+    await console.log(results);
   }
 
   const sendDeviceData = (event, type) => {
