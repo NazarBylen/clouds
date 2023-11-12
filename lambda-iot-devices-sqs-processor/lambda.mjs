@@ -14,7 +14,7 @@ export const handler = async (event) => {
         })
 
         await connection.execute(`
-            INSERT INTO clouds.iot_devices (device_type, device_value, device_time, longitude, latitude) 
+            INSERT INTO iot_devices.iot_devices (device_type, device_value, device_time, longitude, latitude) 
             VALUES ('${data.type}', '${data.value}', '${data.time}', '${data.location.longitude}', '${data.location.latitude}');
         `);
 
