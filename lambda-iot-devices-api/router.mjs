@@ -31,7 +31,7 @@ router.get('/device/humidity', async (req, res) => {
 
         const conn = await dbConnect();
         const data = await conn.execute(`
-            SELECT * FROM clouds.iot_devices WHERE device_type = 'humidity';
+            SELECT * FROM iot_devices WHERE device_type = 'humidity';
         `)
 
         const mappedData = data[0].map(item => ({
@@ -57,7 +57,7 @@ router.get('/device/temperature', async (req, res) => {
 
         const conn = await dbConnect();
         const data = await conn.execute(`
-            SELECT * FROM clouds.iot_devices WHERE device_type = 'temperature';
+            SELECT * FROM iot_devices WHERE device_type = 'temperature';
         `)
 
         const mappedData = data[0].map(item => ({
@@ -83,7 +83,7 @@ router.get('/device/illumination', async (req, res) => {
 
         const conn = await dbConnect();
         const data = await conn.execute(`
-            SELECT * FROM clouds.iot_devices WHERE device_type = 'illumination';
+            SELECT * FROM iot_devices WHERE device_type = 'illumination';
         `)
 
         const mappedData = data[0].map(item => ({
