@@ -23,5 +23,6 @@ export const handler = async (event) => {
         return data;
     } catch (e) {
         console.log('> Error:', e);
+        throw err;
     }
 };
