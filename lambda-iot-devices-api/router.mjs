@@ -45,7 +45,12 @@ router.get('/device/humidity', async (req, res) => {
             }
         }))
 
-        res.status(200).json(mappedData)
+        const total = mappedData.length || 0;
+
+        res.status(200).json({
+            meta: {total},
+            data: mappedData,
+        })
     } catch (error) {
         console.error('An error ocurred:', error);
         res.status(500).json(error);
@@ -71,7 +76,12 @@ router.get('/device/temperature', async (req, res) => {
             }
         }))
 
-        res.status(200).json(mappedData)
+        const total = mappedData.length || 0;
+
+        res.status(200).json({
+            meta: {total},
+            data: mappedData,
+        })
     } catch (error) {
         console.error('An error ocurred:', error);
         res.status(500).json(error);
@@ -97,7 +107,12 @@ router.get('/device/illumination', async (req, res) => {
             }
         }))
 
-        res.status(200).json(mappedData)
+        const total = mappedData.length || 0;
+
+        res.status(200).json({
+            meta: {total},
+            data: mappedData,
+        })
     } catch (error) {
         console.error('An error ocurred:', error);
         res.status(500).json(error);
