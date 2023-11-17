@@ -22,3 +22,15 @@ variable "api_healthcheck" {
   type        = string
   default     = "/api"
 }
+
+variable "ecr_repository" {
+  description = "ECR Repository name"
+  type        = string
+  default     = "tr-nodejs-app"
+}
+
+variable "ecr_repository_tag" {
+  description = "ECR Repository tag"
+  type        = string
+  default     = "latest"
+}
