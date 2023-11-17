@@ -25,3 +25,14 @@ resource "aws_lb_target_group" "ecs-tg" {
 
   depends_on = [aws_lb.ecs-elb]
 }
+
+resource "aws_lb_listener" "ecs_alb_listener" {
+  load_balancer_arn = aws_lb.ecs-elb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.ecs-tg.arn
+  }
+}
