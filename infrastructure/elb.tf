@@ -11,3 +11,17 @@ resource "aws_lb" "ecs-elb" {
 
   depends_on = [aws_security_group.security-group]
 }
+
+resource "aws_lb_target_group" "ecs-tg" {
+  name        = "ecs-target-group"
+  port        = 3000
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = aws_vpc.vpc-main.id
+
+  health_check {
+    path = var.api_healthcheck
+  }
+
+  depends_on = [aws_lb.ecs-elb]
+}
