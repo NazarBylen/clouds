@@ -10,3 +10,9 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
   type = string
 }
+
+variable "vpc_cidr" {
+  description = "CIDR block for main"
+  type        = string
+  default     = "10.0.0.0/16"
+}
