@@ -53,3 +53,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
 
   depends_on = [null_resource.docker-image-create-push-aws-ecr]
 }
+
+resource "aws_ecs_cluster" "ecs-cluster" {
+  name = "ecs-cluster"
+}
