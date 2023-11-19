@@ -34,3 +34,34 @@ variable "ecr_repository_tag" {
   type        = string
   default     = "latest"
 }
+
+variable "role_ecsTaskExecutionRole" {
+  description = "Amazon ECS Task Execution Role"
+  type        = string
+  default     = "arn:aws:iam::882415107630:role/ecsTaskExecutionRole"
+}
+
+variable "db_host" {
+  description = "DB Host"
+  type        = string
+}
+
+variable "db_port" {
+  description = "DB Port"
+  type        = string
+}
+
+variable "db_username" {
+  description = "DB Username"
+  type        = string
+}
+
+variable "db_password" {
+  description = "DB Password"
+  type        = string
+}
+
+variable "db_name" {
+  description = "DB Name"
+  type        = string
+}
