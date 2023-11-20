@@ -19,6 +19,16 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
       cpu       = 512
       memory    = 1024
       essential = true
+      logConfiguration: {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/ecs-task-definition",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      }
       portMappings = [
         {
           containerPort = 3000
