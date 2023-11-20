@@ -1,0 +1,67 @@
+name: TERRAFORM (Build and Deploy)
+
+on:
+  push:
+    branches: [ "terraform" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Package Version
+        id: set-version
+        run: echo "PACKAGE_VERSION=$(jq -r .version ./app/package.json)" >> $GITHUB_ENV
+
+      - name: Show Package Version
+        run: |
+          echo "Package Version: ${{ env.PACKAGE_VERSION }}"
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+        with:
+          docker-version: '24.0.6'
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.6.3"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Perform Terraform actions
+        env:
+          IMAGE_TAG: ${{ env.PACKAGE_VERSION }}
+        run: |
+          cd ./infrastructure
+          terraform init
+          terraform apply  \
+          -auto-approve \
+          -var="aws_access_key=$AWS_ACCESS_KEY" \
+          -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY" \
+          -var="db_host=$DATABASE_HOST" \
+          -var="db_port=$DATABASE_PORT" \
+          -var="db_username=$DATABASE_USERNAME" \
+          -var="db_password=$DATABASE_PASSWORD" \
+          -var="db_name=$DATABASE_NAME" \
+          
+          terraform destroy\
