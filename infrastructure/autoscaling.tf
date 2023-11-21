@@ -36,8 +36,4 @@ resource "aws_appautoscaling_policy" "ecs_policy_cpu" {
 
     target_value = 30
   }
-
-  depends_on = [
-    aws_ecs_service.esc-service
-  ]
 }
