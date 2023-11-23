@@ -61,7 +61,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
     }
   ])
 
-  depends_on = [null_resource.docker-image-create-push-aws-ecr]
+  depends_on = [null_resource.docker-image-create-push-aws-ecr, aws_cloudwatch_log_group.log-group]
 }
 
 resource "aws_ecs_cluster" "ecs-cluster" {
